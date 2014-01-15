@@ -10,9 +10,11 @@ import alfabeto.Alfabeto;
 import alfabeto.SimbNaoAlfabetoException;
 
 public class CriarAFNExcutar {
-
-	public CriarAFNExcutar() {
-		
+	
+	private Alfabeto alf;
+	
+	public CriarAFNExcutar(Alfabeto alf) {
+		alf = alf;
 	}
 	
 	public AutomatroFN criarAFN(char simbolo, Alfabeto alfabeto) throws SimbNaoAlfabetoException, NaoEstadoException {
@@ -36,11 +38,63 @@ public class CriarAFNExcutar {
 		return afn;
 	}
 	
-	public AutomatroFN calcularExp(String expresao) {
+	public AutomatroFN calcularExp(String expresao) throws SimbNaoAlfabetoException, NaoEstadoException {
 		Stack<Character> pilhaOp = new Stack<Character>();
 		Stack<AutomatroFN> pilhaAFN = new Stack<AutomatroFN>();
+		AutomatroFN afn;
+		char c;
+		
+		for (int i = 0; i < expresao.length(); i++) {
+			c = expresao.charAt(i);
+			if (c != '(') {
+				if (isOperador(c))
+					pilhaOp.push(c);
+				else if (c != ')') {
+					afn = criarAFN(c, alf);
+					pilhaAFN.push(afn);
+				} else {
+					calcular(pilhaOp, pilhaAFN, c);
+				}
+			}
+		}
 		
 		return null;
+	}
+
+	private void calcular(Stack<Character> pilhaOp,
+			Stack<AutomatroFN> pilhaAFN, char c)
+			throws SimbNaoAlfabetoException, NaoEstadoException {
+		AutomatroFN a, b;
+		char op;
+		switch (c) {
+			case '+':
+				a = pilhaAFN.pop();
+				op = pilhaOp.pop();
+				b = pilhaAFN.pop();
+				pilhaAFN.push(a.uniao(b));
+				break;
+			case '.': 
+				a = pilhaAFN.pop();
+				op = pilhaOp.pop();
+				b = pilhaAFN.pop();
+				pilhaAFN.push(a.concatenacao(b));
+				break;
+			case '*':
+				a = pilhaAFN.pop();
+				op = pilhaOp.pop();
+				pilhaAFN.push(a.estrela());
+				break;
+		}
+	}
+	
+	private boolean isOperador(char c) {
+		if (c == '+')
+			return true;
+		else if (c == '.') 
+			return false;
+		else if (c == '*') 
+			return true;
+		return false;
 	}
 }
 

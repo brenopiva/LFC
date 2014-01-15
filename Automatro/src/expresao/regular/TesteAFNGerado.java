@@ -26,7 +26,7 @@ public class TesteAFNGerado {
 		char[] alfabeto = {'a','b'};
 		Alfabeto alf = new Alfabeto(alfabeto);
 		
-		CriarAFNExcutar c = new CriarAFNExcutar();
+		CriarAFNExcutar c = new CriarAFNExcutar(alf);
 		//a
 		AutomatroFN a = c.criarAFN('a', alf);
 		a.printAFN();
