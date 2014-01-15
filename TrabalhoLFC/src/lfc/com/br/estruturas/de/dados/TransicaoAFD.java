@@ -1,20 +1,20 @@
-package lfc.com.br;
+package lfc.com.br.estruturas.de.dados;
 
-public class Transicao {
+public class TransicaoAFD {
 
-	private Estado estado;
+	private EstadoAFD estado;
 	private String simbolo;
 
-	public Transicao(Estado estado, String simbolo) {
+	public TransicaoAFD(EstadoAFD estado, String simbolo) {
 		this.estado = estado;
 		this.simbolo = simbolo;
 	}
 
-	public Estado getEstado() {
+	public EstadoAFD getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Estado estado) {
+	public void setEstado(EstadoAFD estado) {
 		this.estado = estado;
 	}
 

@@ -1,24 +1,24 @@
-package lfc.com.br;
+package lfc.com.br.estruturas.de.dados;
 
 import java.util.ArrayList;
 
 public class AFD {
-	private ArrayList<Estado> estados = new ArrayList<Estado>();
+	private ArrayList<EstadoAFD> estados = new ArrayList<EstadoAFD>();
 
-	public AFD(ArrayList<Estado> estados) {
+	public AFD(ArrayList<EstadoAFD> estados) {
 		this.estados = estados;
 	}
 
-	public ArrayList<Estado> getEstados() {
+	public ArrayList<EstadoAFD> getEstados() {
 		return estados;
 	}
 
-	public void setEstados(ArrayList<Estado> estados) {
+	public void setEstados(ArrayList<EstadoAFD> estados) {
 		this.estados = estados;
 	}
 
 	public boolean verificarPalavra(String palavra) {
-		Estado estado = estados.get(0);
+		EstadoAFD estado = estados.get(0);
 		System.out.println("Estado "+estado.getId());
 		for (int i = 0; i < palavra.length(); i++) {
 			String simbolo = palavra.substring(i,i+1);
@@ -27,5 +27,13 @@ public class AFD {
 		}
 		return estado.isFinal();
 	}
-
+	
+	public EstadoAFD getEstadoInicial(){
+		for(int i = 0; i < estados.size(); i++){
+			if(estados.get(i).isInicial()){
+				return estados.get(i);
+			}
+		}
+		return null;
+	}
 }
